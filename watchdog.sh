@@ -35,12 +35,13 @@ PGREP="pgrep"
 #Check if we have have a second param
 if [ -z $SERVICE_RESTARTNAME ]
   then
-    RESTART="service ${SERVICE_NAME} start" #No second param
+    #RESTART="service ${SERVICE_NAME} start" #No second param
+    RESTART="${SERVICE_NAME}" #No second param
   else
-    RESTART="service ${SERVICE_RESTARTNAME} start" #Second param
+    RESTART="${SERVICE_RESTARTNAME}" #Second param
   fi
 
-echo ${RESTART};
+echo watchdog for ${RESTART};
 
 # find service pids
 $PGREP ${SERVICE_NAME} ${EXTRA_PGREP_PARAMS}
@@ -48,6 +49,7 @@ $PGREP ${SERVICE_NAME} ${EXTRA_PGREP_PARAMS}
 #if we get no pids, service is not running
 if [ $? -ne 0 ] 
 then
+ echo ${RESTART};
  $RESTART
  if [ -z $MAIL_TO ]
    then
@@ -55,4 +57,6 @@ then
    else
      echo "Performing restart of ${SERVICE_NAME}" | mail -s "Service failure: ${SERVICE_NAME}" ${MAIL_TO}
    fi
+else
+     echo "running"
 fi

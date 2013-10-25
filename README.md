@@ -1,3 +1,13 @@
+This is a tweaked version that just runs an executable instead of doing `service ... start`
+
+It is probably best to use a full path to avoid potential attacks via path trickery
+
+-------------------------------
+
+Original README
+
+-------------------------------
+
 service-watchdog
 ================
 
